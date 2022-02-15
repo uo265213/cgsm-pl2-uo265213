@@ -98,8 +98,8 @@ scene.add( light );
 
 const sungeometry = new THREE.SphereGeometry( 5 );
 
-const NOISEMAP = '../shaders/cloud.gif';
-const SUNMAP = '../shaders/lavatile.gif';
+const NOISEMAP = '../textures/cloud.gif';
+const SUNMAP = '../textures/lavatile.gif';
 const cargatexturas = new THREE.TextureLoader( );
 const uniforms = {
     "fogDensity": { value: 0 },

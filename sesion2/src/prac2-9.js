@@ -6,12 +6,6 @@ if ( WEBGL.isWebGLAvailable() ) {
     console.log("WEBGL soportado en el nagevador ");
 }
 
-window.addEventListener( 'resize', ( ) => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix( );
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.render( scene, camera );
-}, false );
 
 const scene = new THREE.Scene();
 
@@ -19,11 +13,18 @@ const renderer = WEBGL.isWebGLAvailable() ? new THREE.WebGLRenderer( {antialias:
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
+
+window.addEventListener( 'resize', ( ) => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix( );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.render( scene, camera );
+}, false );
+
+
+
 const camera = new THREE.PerspectiveCamera ( 45, window.innerWidth / window.innerHeight, 1, 4000 );
 camera.position.set( 0, 0, 45 );
-
-
-
 
 
 
@@ -45,6 +46,8 @@ const loadingManager = new THREE.LoadingManager( ( ) => {
 
     scene.add( iss );
     console.log( 'Model loaded' );
+    renderer.render( scene, camera );
+    
 } );
 
 const loader = new ColladaLoader( loadingManager );
@@ -54,7 +57,12 @@ loader.load( modelUrl, ( collada ) => {
     iss.scale.x = iss.scale.y = iss.scale.z = 0.3;
     iss.rotation.set( Math.PI / 5, Math.PI / 5, 0 );
     iss.updateMatrix( );
+    
 } );
+
+
+
+
 
 
 
