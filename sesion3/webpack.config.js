@@ -1,0 +1,34 @@
+module.exports = {
+    module: {
+        rules: [
+          {
+            test: /\.glsl$/,
+            use: {
+              loader: 'webpack-glsl-loader'
+            }
+          }
+        ]
+      }
+    ,
+    mode: "development",
+    entry: {
+        "prac3-1": './src/prac3-1.js',
+        "prac3-2": './src/prac3-2.js',
+        "prac3-3": './src/prac3-3.js',
+        "prac3-4": './src/prac3-4.js'
+        
+    },
+    devtool: 'inline-source-map',
+    devServer: {
+        static: {
+            directory: __dirname
+        },
+        devMiddleware: {
+            writeToDisk: true
+        }
+    },
+    performance: {
+        maxAssetSize: 2000000,
+        maxEntrypointSize: 2000000
+    }
+};
