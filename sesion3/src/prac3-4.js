@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import WEBGL from 'three/examples/jsm/capabilities/WebGL.js';
 import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min';
 import Stats from 'three/examples/jsm/libs/stats.module';
+import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
 
 if ( WEBGL.isWebGLAvailable() ) {
     console.log("WEBGL soportado en el nagevador ");
@@ -21,7 +22,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 const camera = new THREE.PerspectiveCamera ( 45, window.innerWidth / window.innerHeight, 1, 4000 );
-camera.position.set( 0, 5, 190 );
+camera.position.set( 0, 25, 300 );
 
 
 const helper = new THREE.GridHelper( 800, 40, 0x444444, 0x444444 );
@@ -29,10 +30,9 @@ helper.position.y = 0.1;
 scene.add(helper);
 
 
-const light = new THREE.DirectionalLight( 0xffffff,  2);
-light.position.set(0, 500, 0);
-scene.add( light );
-
+const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xf0f0f0, 0.6 );
+hemiLight.position.set( 0, 500, 0 );
+scene.add( hemiLight );
 
 
 const geometry = new THREE.BoxGeometry( 50, 50, 50 );
@@ -71,16 +71,23 @@ stats.domElement.style.position = 'absolute';
 stats.domElement.style.top = '0px';
 document.body.appendChild( stats.domElement );
 
+
+const controls = new FirstPersonControls( camera );
+controls.movementSpeed = 70;
+controls.lookSpeed = 0.05;
+controls.noFly = false;
+controls.lookVertical = false;
+
 //const gui = new GUI( );
 //gui.add( controlData, 'bumpScale', -4, 4 ).step(0.1).name( 'bumpScale' );
 
 const box1 = new THREE.Mesh( geometry, materials  );
-box1.position.set(-100,25,0);
-box1.rotation.set( 0,Math.PI );
+box1.position.set(-150,25,0);
+box1.rotation.set( 0, 0, 0 );
 
 const box2 = new THREE.Mesh( geometry, materials  );
-box2.position.set(100,25,0);
-box1.rotation.set( 0,-Math.PI/2,0 );
+box2.position.set(150,25,0);
+box2.rotation.set( 0, Math.PI,0 );
 
 
 scene.add( box1 );
@@ -103,6 +110,7 @@ function animate( ) {
         //const rotation = ( delta * Math.PI * 2 ) / 24;
         //box1.rotation.y += rotation;
         //box2.rotation.y += rotation;
+        controls.update( delta );
         materials .bumpScale = controlData.bumpScale;
         stats.update( );
     // Render the scene

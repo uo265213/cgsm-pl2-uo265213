@@ -5,12 +5,7 @@ if ( WEBGL.isWebGLAvailable() ) {
     console.log("WEBGL soportado en el nagevador ");
 }
 
-window.addEventListener( 'resize', ( ) => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix( );
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.render( scene, camera );
-}, false );
+
 
 const scene = new THREE.Scene();
 
@@ -21,7 +16,12 @@ document.body.appendChild( renderer.domElement );
 const camera = new THREE.PerspectiveCamera ( 45, window.innerWidth / window.innerHeight, 1, 4000 );
 camera.position.set( 0, 0, 500 );
 
-
+window.addEventListener( 'resize', ( ) => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix( );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.render( scene, camera );
+}, false );
 
 const video = document.getElementById( 'video' );
 
@@ -42,7 +42,7 @@ const wall = new THREE.Mesh( new THREE.PlaneGeometry( image.width, image.height,
 
 scene.add(wall);
 
-const light = new THREE.PointLight( 0xffffff, 2 );
+const light = new THREE.AmbientLight( 0xffffff, 2 );
 light.position.set( -8, 0, 0 );
 scene.add( light );
 
