@@ -38,7 +38,7 @@ const box = new THREE.Mesh( geometry, material );
 box.rotation.set( Math.PI / 5, Math.PI / 5, 0 );
 
 
-const light = new THREE.AmbientLight( 0xffffff, 2 );
+const light = new THREE.AmbientLight( 0xffffff, 1 );
 light.position.set( -8, 0, 0 );
 scene.add( light );
 
